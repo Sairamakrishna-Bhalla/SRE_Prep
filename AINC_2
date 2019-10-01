@@ -1,0 +1,1480 @@
+DevOps Interview Questions
+Overview
+The category of questions typically fall into the following three categories:
+1.	Development / coding skills
+2.	Systems / Operational knowledge / experience
+3.	Personality / team fit
+This document aims to provide plenty of sample questions that we can use and if we do we can start to compare candidates easier. We obviously can work to improve the quality of the questions collaboratively as well.
+Process
+Phone Screens
+•	(2-3min) Start the conversation by introducing yourself and then give a quick overview of the team and responsibilities.
+o	Some candidates are not fully aware of the work and may not be totally interested.
+o	Stay vague, since there is no NDA signed at this point, but can highlight:
+	We manage CI infra, own source control, build infra, artifact management.
+	We automate all aspect of this infra like bringing up new cluster, ha, dr, backup, monitoring, etc. we heavily use open source and believe in automation.
+•	(45mins) Next go around: scripting, Puppet, BASH, debugging, etc
+o	Depending on their strengths, you can vary the amount of time spent in each category.
+•	Things to pay attention to:
+o	Good clear communication.
+o	Thought process is transparent and you can connect to them quickly with the way they think, asking questions, then that is a good sign. (team fit)
+Questions
+Development / Coding
+1.	Implement the paste command. (Python, Ruby, etc)
+1.	Often have started with a static set of three files for the candidate. 
+Can later ask how they would extend to support N number of files.
+2.	Discuss runtime implications of their implementation: 
+1.	Memory usage (what if one of the files was 10G in size?)
+2.	Runtime (Seeing if they know Big-O for runtime complexity)
+3.	Ideal solution would support N files and just keep a list of open file handles
+4.	Something you can paste into a collabedit session:
+5.	$ more file{1,2,3} | cat
+::::::::::::::
+file1
+::::::::::::::
+one
+two
+longer three
+::::::::::::::
+file2
+::::::::::::::
+San Francisco
+Sunnyvale
+San Jose
+::::::::::::::
+file3
+::::::::::::::
+Green
+Red
+Orange
+Purple
+Yellow
+Brown
+$ paste file{1,2,3}
+one San Francisco Green
+two Sunnyvale Red
+longer three San Jose Orange
+Purple
+Yellow
+Brown
+2.	Apache logfile parsing (bash)
+1.	Share a sample access_log output and ask to get a unique HTTP codes counted and sorted by their count
+2.	Expecting: awk '{ print $9 }' | sort | uniq -c | sort -nr
+3.	Sample output to share:
+4.	62.210.215.113 - - [14/Jul/2016:16:14:13 -0400] "GET /resume/feed/ HTTP/1.1" 200 2248 "-" "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.6
+6 Safari/537.36"
+107.183.178.139 - - [14/Jul/2016:16:20:24 -0400] "GET / HTTP/1.0" 200 74545 "http://myblog.com/" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Max
+thon/4.4.3.4000 Chrome/30.0.1599.101 Safari/537.36"
+107.183.178.139 - - [14/Jul/2016:16:20:24 -0400] "GET /wp-login.php HTTP/1.1" 403 292 "http://myblog.com/" "Opera/9.80 (Windows NT 6.2; Win64; x64) Presto/2.12.388 Version/12.1
+7"
+107.183.178.139 - - [14/Jul/2016:16:20:24 -0400] "GET /wp-login.php HTTP/1.1" 403 292 "http://myblog.com/wp-login.php" "Opera/9.80 (Windows NT 6.2; Win64; x64) Presto/2.12.388
+Version/12.17"
+107.183.178.139 - - [14/Jul/2016:16:20:25 -0400] "GET / HTTP/1.1" 200 74545 "http://myblog.com/" "PHP/5.{3|2}.{1|2|3|4|5|6|7|8|9|0}{1|2|3|4|5|6|7|8|9|0}"
+107.183.178.139 - - [14/Jul/2016:16:20:25 -0400] "POST /xmlrpc.php HTTP/1.1" 403 290 "http://myblog.com/" "PHP/5.3.57"
+107.183.178.139 - - [14/Jul/2016:16:20:25 -0400] "GET / HTTP/1.0" 200 74545 "-" "PHP/5.3.57"
+54.234.214.67 - - [14/Jul/2016:16:23:19 -0400] "GET / HTTP/1.1" 301 - "-" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0"
+54.234.214.67 - - [14/Jul/2016:16:23:19 -0400] "GET / HTTP/1.1" 200 74545 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0"
+54.234.214.67 - - [14/Jul/2016:16:23:19 -0400] "GET / HTTP/1.1" 301 - "-" "Mozilla/5.0 (
+Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0"
+54.234.214.67 - - [14/Jul/2016:16:23:20 -0400] "GET / HTTP/1.1" 200 74545 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0"
+104.202.52.41 - - [14/Jul/2016:16:28:22 -0400] "GET / HTTP/1.0" 200 74545 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Maxthon/4.4.3.4000 Chrom
+e/30.0.1599.101 Safari/537.36"
+3.	Write a timeout() function that takes a timeout value in seconds and then executes the command (bash)
+1.	Just calling the coreutils 'timeout' is good to know but obviously doesn't showcase shell knowledge.
+2.	Explanation by way of example invocations:
+timeout 60 ls / # ← should return quickly
+timeout 50 sleep 90 # ← should be terminated at 50s mark
+3.	Tests basic looping / polling and that they know the $! variable.
+4.	Bonus points if they can return the same return code as the executed command. 
+I.e. They know the wait command.
+4.	Which days have my birthday fell on the most? (bash)
+1.	Quite similar to prior Apache unique count but also tests their resourcefulness in acquiring the day of the week values.
+2.	You may end up having to help with at least: date --date=2017-04-21 +%A
+1.	But let them handle the sequencing.
+3.	Expecting something like:
+4.	for year in $(seq 1978 2017); do date --date="$year-04-21" +%A; done \
+| sort | uniq -c | sort -nr
+5.	Is there a size limit on shell variables? (bash)
+1.	Start by asking the candidate that question. Do they think it's limited by memory of the machine?
+1.	I once hit this limit on old Solaris machines but may have been using ksh. 
+2.	Bash is unlikely limiting directly but instead being limited by the underlying system calls. See the execve(2) man page for details. Limit is coming from stack size. 
+3.	Bash will issue a “argument list is too long” whenever you then try to run a command.
+2.	Then ask them to programmatically find the limit.
+1.	Discuss how the limit may be imposed on the execve syscall and in what circumstances the shell would hit that. (Variable would need to be export'ed for bash to try to include it in a fork+exec)
+2.	Assuming they take the brute force method of just tacking on another character to a variable until no more, ask how they could improve the efficiency of their algorithm.
+6.	Ascii Histogram (Python, Ruby, etc - Good for Onsite)
+1.	This one could easily take the full time, so use appropriately
+Make sure you've done this yourself first too so you understand the corner cases and you can help guide the answer.
+2.	Print an ascii histogram from an input file of: 2 2 3 4 2 2 5 3 5 5
+3.	Output would be:
+4.	*
+* *
+** *
+****
+5.	Should preserve the order of digit seen (first column is four 2's, then two 3's, etc)
+6.	Implementation details
+1.	Mostly a question about data structures. In this case you needed an ordered object to hold counts but also need to keep track of which item has which value.
+2.	Perfectly fine to keep two data structures: List for the order seen, Hash for the frequency
+3.	Discuss the runtime complexity of the solution
+7.	How do you find all of the commands with 'top' somewhere in the name? (bash)
+1.	This tests a candidate's creativity along with shell knowledge.
+2.	Typically will get a for-loop type of answer but personal favorite is:
+echo $PATH | sed 's/:/ /g' | xargs ls | grep top
+8.	Can you provide a regex that will match a valid IP address?
+1.	This can be notoriously tricky with several edge cases.
+2.	Allow them to start simple, then remind them of the following edge cases (if necessary):
+1.	Ensure each octet doesn't exceed 255
+2.	Legal IP ranges
+1.	First octet can not be 0, e.g. and if routable value can not be 127
+Systems / Operational
+1.	What might the following error mean?
+1.	message: "Caused by: java.lang.OutOfMemoryError: unable to create new native thread"
+2.	Explore the idea that the message might not be very accurate, so what are all the possible failures.
+1.	Obvious first is memory truly exhausted
+Can spin into discussion of swap
+2.	Discuss the difference between spawning a new process vs. a thread
+What is truly unique to a thread? (stack)
+3.	Too many processes - reached a limit on the user
+How would you confirm / rule that out?
+2.	Describe what happens when you type: curl https://apple.com/
+1.	Idea is allow candidate to talk through each little detail and you can take tangents
+1.	Command execution
+2.	Networking related topics
+1.	DNS
+2.	Routing
+3.	Load Balancers
+3.	High availability / load balancing
+3.	List various http codes and what they mean. How do you interpret the responses from different Rest methods GET, PUT, DELETE.
+4.	What does system load 1min, 5min, 15min mean?
+1.	What is an ideal load average in a single processor system?
+2.	What is an ideal load average in multi processor system?
+3.	How does this relate to the “R” status (STAT) in “ps”?
+5.	How would you troubleshoot a 3-tiered application that is sporadically slow?
+1.	Explain that this is a role-playing question where they describe what they'd do and you give the answer as to what they see. E.g. “I'd run 'vmstat 5 5'” and then you tell them what details they get back.
+2.	I've described the environment with a LB in front of 2 x web servers (nginx), 2 x app servers (java, python, other app server), 2 x db servers (PostgreSQL). 
+3.	Allow the candidate to describe the ideal monitoring / tooling setup as well as if they setup the machine. 
+E.g. Perhaps they'd want 'sar' enabled with Splunk logging and other application level metrics being collected.
+1.	This becomes a tangent unto itself.
+4.	Typically like to explore how you determine if a process “looks healthy” and see if they're familiar with tools such as strace or related. (Does not always lead to this tangent)
+5.	You can pick what the “problem” is ahead of time. I've used the following:
+1.	One of the databases is no longer using indexes on a very large database. Allows you to explore if they're familiar with querying the DB for long running queries and/or if they're familiar with the EXPLAIN keyword.
+6.	Given a Linux box that has every package under the sun installed on it, but missing the “cp” command, how would you “cp /location1/file1 /location2/file2”? They should figure out solutions using piping, redirection, inodes, server/client, and coding a script. Here are some examples for you to think of and help guide them to, in case they are mentally blocked from one of these types of solutions:
+1.	cat /location1/file1 > /location2/file2
+2.	scp /location1/file1 /location2/file2
+3.	dd if=/location1/file1 of=/location2/file2
+4.	ln /location1/file1 /location2/file2 (how diff from ln -s? and why is -s cheating? is ln cheating all-around? why or why not?)
+5.	nc -l 1234 > /location2/file2 & nc localhost 1234 < /location1/file1 ←seems fair to remind them nc syntax if they at least think of nc
+6.	setup Apache/nginx/$webserver pointing DocumentRoot to /location1 and use curl/wget/$commandlineclient to copy into /location2/file2
+7.	open file with various editors and write to new location, show they know how to open/read/write with vi and emacs, and know about joe, jed, pico, nano, or other common mini terminal editors
+8.	write something in Python/Ruby/Perl/etc that opens one file and writes another, possibly recursively
+7.	Extend previous problem: recursively copy all of /location1 to /location2. Normally looks like “cp -R /location1 /location2”. Following are some ways to do it, in case neither you nor candidate can think of a way.
+1.	( cd /location1 && tar -cf - ./ ) | ( mkdir -p /location2 && cd /location2 && tar -xf -) ←typically you'll need to remind candidates that tar, when given a filename of “-” will pipe to STDOUT on -c, or read from STDIN on -x. Given that, they'll probably come up with a partially-correct solution. See how far they can get to that completely-correct solution. Also, do they know about tar's “-C $dir”?
+2.	scp -r /location1 /location2 ←if they already did scp above, this should be trivial
+3.	rsync -a /location1 /location2 ←same
+4.	code a Python/Ruby/Perl/etc script to recursively do this
+CI/CD - General
+1.	How do you automate release management in CD (Continuous Delivery)?
+1.	Look for terms like: automating the entire lifecycle — development, version control, builds, repositories and artifact delivery, tests and acceptance, server provisioning, application configuration to production deployment.
+2.	Describe the most significant gain you made from automating a process through configuration management tool (Chef, Puppet, Ansible or SaltStack)?
+3.	What are your favorite deployment techniques and why?
+1.	Look for terms like: Zero downtime, Canary, Blue/Green deployments
+4.	What are some of the DevOps KPI (Key Performance Indicators)?
+1.	Look for terms like: Uptime vs downtime, Errors ratio, Responsiveness, Reject ratio, Load capacity, time-to-market
+5.	How can you reduce load time of a dynamic website?
+1.	Look for terms like: webpage optimization, cached web pages, quality web hosting, compressed text files, Apache fine tuning.
+6.	How would you prepare for a migration?
+1.	This question evaluates candidate experience of real projects with all the awkwardness and complexity they bring. Look for terms like: cut-over, dress rehearsals, roll-back and roll-forward, DNS solutions, feature toggles, branch by abstraction, and automation.
+CI/CD - Jenkins
+1.	How did you manage jenkins thru automation? 
+2.	How did you handle jenkins updates (including plugins)?
+3.	Have you used jenkins groovy? When?
+4.	How to access jenkins REST API? Different format? XML and JSON?
+5.	What is the common performance issue?
+1.	Factors that affect performance
+1.	Number of slaves
+1.	have you obtained thread dump?
+2.	Degree of concurrent HTTP accesses to the master will have impact to memory or CPU?
+1.	CPU is the answer
+3.	Number of jobs
+1.	do you create jobs thru template?
+4.	Number of builds
+1.	how do you prune build history?
+6.	How will you scale jenkins?
+1.	horizontal vs vertical
+Docker
+1.	Name a few docker namespaces?
+2.	What is cgroup (control groups) in docker?
+3.	What are the different types of docker storage drivers you have worked with?
+4.	How did you deal with docker persistence? Have you used any docker volume plugins?
+5.	How did you configure docker networking to run full stack app?
+Personality / Team Fit Questions
+1.	Tell me about a project that you're particularly proud of?
+1.	This is deliberately vague and gives the candidate an opportunity to do the talking while we learn insights on the type of person they are.
+2.	What are your interests from technical perspective?
+3.	Tell me about a time which you disagreed with another team or supervisor, etc and how did you resolve the problem?
+1.	Idea is to get an idea on how well the candidate can self-manage negotiations with other teams to come to a common ground solution.
+4.	Who is your toughest user and why?
+5.	What is the unforgettable mistake you did in your career and what did you learn?
+SRE Interview questions
+Coding
+Both coding tasks are available on http://coderpad.io/ now.
+1. Count the number of commits happening on Github
+Use the public Github Events API at https://api.github.com/events.
+
+Docs:
+https://developer.github.com/v3/activity/events/
+https://developer.github.com/v3/activity/events/types/#pushevent
+# Example API response:
+[
+  {
+    "id": "123456",
+    "type": "PushEvent",
+    "payload": {
+      "push_id": 123456,
+      "commits": [
+        {
+          "sha": "49adfcc33d167903cf3e791331ec58bd726576f0",
+          "author": {
+            "email": "no-email@example.com",
+            "name": "First_Last"
+          },
+          "message": "Replacing tabs with spaces",
+          "url": "https://api.github.com/repos/no/such_repo/commits/49adfcc33d167903cf3e791331ec58bd726576f0"
+        }
+      ]
+    },
+    "public": true,
+    "created_at": "2021-05-23T19:12:12Z"
+  }
+]
+Solution in Python 2:
+import requests
+
+r = requests.get('https://api.github.com/events')
+i = 0
+
+for item in r.json():
+    if item['type'] == 'PushEvent':
+        i = i + len(item['payload']['commits'])
+        print item['created_at'], len(item['payload']['commits'])
+        
+print i
+
+2. Apache logfile parsing
+
+Get unique HTTP codes counted and sorted by their count
+# 62.210.215.113 - - [14/Jul/2016:16:14:13 -0400] "GET /resume/feed/ HTTP/1.1" 200 2248 "-" "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.66 Safari/537.36"
+# 107.183.178.139 - - [14/Jul/2016:16:20:24 -0400] "GET / HTTP/1.0" 200 74545 "http://myblog.com/" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Maxthon/4.4.3.4000 Chrome/30.0.1599.101 Safari/537.36"
+# 107.183.178.139 - - [14/Jul/2016:16:20:24 -0400] "GET /wp-login.php HTTP/1.1" 403 292 "http://myblog.com/" "Opera/9.80 (Windows NT 6.2; Win64; x64) Presto/2.12.388 Version/12.17"
+# 107.183.178.139 - - [14/Jul/2016:16:20:24 -0400] "GET /wp-login.php HTTP/1.1" 403 292 "http://myblog.com/wp-login.php" "Opera/9.80 (Windows NT 6.2; Win64; x64) Presto/2.12.388Version/12.17"
+# 107.183.178.139 - - [14/Jul/2016:16:20:25 -0400] "GET / HTTP/1.1" 200 74545 "http://myblog.com/" "PHP/5.{3|2}.{1|2|3|4|5|6|7|8|9|0}{1|2|3|4|5|6|7|8|9|0}"
+# 107.183.178.139 - - [14/Jul/2016:16:20:25 -0400] "POST /xmlrpc.php HTTP/1.1" 403 290 "http://myblog.com/" "PHP/5.3.57"
+# 107.183.178.139 - - [14/Jul/2016:16:20:25 -0400] "GET / HTTP/1.0" 200 74545 "-" "PHP/5.3.57"
+# 54.234.214.67 - - [14/Jul/2016:16:23:19 -0400] "GET / HTTP/1.1" 301 - "-" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0"
+# 54.234.214.67 - - [14/Jul/2016:16:23:19 -0400] "GET / HTTP/1.1" 200 74545 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0"
+# 54.234.214.67 - - [14/Jul/2016:16:23:19 -0400] "GET / HTTP/1.1" 301 - "-" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0"
+# 54.234.214.67 - - [14/Jul/2016:16:23:20 -0400] "GET / HTTP/1.1" 200 74545 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0"
+# 104.202.52.41 - - [14/Jul/2016:16:28:22 -0400] "GET / HTTP/1.0" 200 74545 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Maxthon/4.4.3.4000 Chrome/30.0.1599.101 Safari/537.36"
+Solution using bash:
+awk '{ print $9 }' | sort | uniq -c | sort -nr
+
+Systems
+1. Containers
+1.	Name a few docker namespaces?
+1.	Docker Engine uses namespaces such as the following on Linux:
+2.	The pid namespace: Process isolation (PID: Process ID).
+3.	The net namespace: Managing network interfaces (NET: Networking).
+4.	The ipc namespace: Managing access to IPC resources (IPC: InterProcess Communication).
+5.	The mnt namespace: Managing filesystem mount points (MNT: Mount).
+6.	The uts namespace: Isolating kernel and version identifiers. (UTS: Unix Timesharing System).
+7.	The uid namespace: Isolating User IDs.
+2.	What is cgroup (control groups) in docker?
+1.	A cgroup limits an application to a specific set of resources. Control groups allow Docker Engine to share available hardware resources to containers and optionally enforce limits and constraints. For example, you can limit the memory available to a specific container.
+3.	What are the different types of docker storage drivers you have worked with?
+1.	overlay2 is preferred, followed by overlay. Neither of these requires extra configuration. overlay2 is the default choice for Docker CE.
+2.	devicemapper is next, but requires direct-lvm for production environments, because loopback-lvm, while zero-configuration, has very poor performance.
+4.	How did you deal with data persistence in containers?
+5.	How did you configure container networking?
+2. Linux
+Process Execution and/or Threads 
+Q. What is a process?
+A. A process is an instance of an executing program. When a program is executed, the kernel loads the code of the program into virtual memory, allocates space for program variables, and sets up kernel bookkeeping data structures to record various information (such as process ID, termination status, user IDs, and group IDs) about the process. From a kernel point of view, processes are the entities among which the kernel must share the various resources of the computer.
+
+Q. What are the process states in Linux?
+A. (R) Running: Process is either running or ready to run
+* (S) Interruptible: a Blocked state of a process and waiting for an event or signal from another process
+* (D) Uninterruptible: a blocked state. Process waits for a hardware condition and cannot handle any signal
+* (T) Stopped: Process is stopped or halted and can be restarted by some other process
+* (Z) Zombie: <defunct> process terminated, but information is still there in the process table.
+
+Q. How are threads different from processes?
+A. Like processes, threads are a mechanism that permits an application to perform multiple tasks concurrently. A single process can contain multiple threads.
+
+All threads are independently executing the same program, and they all share the same global memory, including the initialized data, uninitialized data, and heap segments.
+Sharing information between threads is easy and fast. It is just a matter of copying data into shared (global or heap) variables. However, in order to avoid the problems that can occur when multiple threads try to update the same information, we must employ some synchronization techniques.
+Thread creation is faster than process creation—typically, ten times faster or better. On Linux, threads are implemented using the clone() system call.
+
+Q. Describe Linux boot process
+A. 
+1. BIOS
+2. MBR
+3. Boot manager/GRUB
+4. Initrd
+5. Kernel
+6. Init/Upstart/Runlevels
+
+Full answer: https://utcc.utoronto.ca/~cks/space/blog/linux/LinuxBootOverview
+
+Q. What is a signal in Linux?
+A. It is an asynchronous notification sent to a process or to a specific thread within the same process in order to notify it of an event that occurred. When a signal is sent, the operating system interrupts the target process's normal flow of execution.
+
+POSIX standard
+
+| Signal | Value | Comment | 
+| --------------- | ------------------ | ---------------- |
+| SIGHUP | 1 | Hangup detected on controlling terminal or death of controlling process |
+| SIGINT | 2 | Interrupt from keyboard / CTRL + C | 
+| SIGQUIT | 3 | Quit from keyboard |
+| SIGILL | 4 | Illegal Instruction |
+| SIGABRT | 6 | Abort signal from abort(3) |
+| SIGFPE | 8 | Floating point exception |
+| SIGKILL | 9 | Kill signal |
+| SIGTERM | 15 | Termination signal |
+
+DevOps Interview Questions
+Overview
+The category of questions typically fall into the following three categories:
+1.	Development / coding skills
+2.	Systems / Operational knowledge / experience
+3.	Personality / team fit
+This document aims to provide plenty of sample questions that we can use and if we do we can start to compare candidates easier. We obviously can work to improve the quality of the questions collaboratively as well.
+Process
+Phone Screens
+•	(2-3min) Start the conversation by introducing yourself and then give a quick overview of the team and responsibilities.
+o	Some candidates are not fully aware of the work and may not be totally interested.
+o	Stay vague, since there is no NDA signed at this point, but can highlight:
+	We manage CI infra, own source control, build infra, artifact management.
+	We automate all aspect of this infra like bringing up new cluster, ha, dr, backup, monitoring, etc. we heavily use open source and believe in automation.
+•	(45mins) Next go around: scripting, Puppet, BASH, debugging, etc
+o	Depending on their strengths, you can vary the amount of time spent in each category.
+•	Things to pay attention to:
+o	Good clear communication.
+o	Thought process is transparent and you can connect to them quickly with the way they think, asking questions, then that is a good sign. (team fit)
+Questions
+Development / Coding
+1.	Implement the paste command. (Python, Ruby, etc)
+1.	Often have started with a static set of three files for the candidate. 
+Can later ask how they would extend to support N number of files.
+2.	Discuss runtime implications of their implementation: 
+1.	Memory usage (what if one of the files was 10G in size?)
+2.	Runtime (Seeing if they know Big-O for runtime complexity)
+3.	Ideal solution would support N files and just keep a list of open file handles
+4.	Something you can paste into a collabedit session:
+5.	$ more file{1,2,3} | cat
+::::::::::::::
+file1
+::::::::::::::
+one
+two
+longer three
+::::::::::::::
+file2
+::::::::::::::
+San Francisco
+Sunnyvale
+San Jose
+::::::::::::::
+file3
+::::::::::::::
+Green
+Red
+Orange
+Purple
+Yellow
+Brown
+$ paste file{1,2,3}
+one San Francisco Green
+two Sunnyvale Red
+longer three San Jose Orange
+Purple
+Yellow
+Brown
+2.	Apache logfile parsing (bash)
+1.	Share a sample access_log output and ask to get a unique HTTP codes counted and sorted by their count
+2.	Expecting: awk '{ print $9 }' | sort | uniq -c | sort -nr
+3.	Sample output to share:
+4.	62.210.215.113 - - [14/Jul/2016:16:14:13 -0400] "GET /resume/feed/ HTTP/1.1" 200 2248 "-" "Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.6
+6 Safari/537.36"
+107.183.178.139 - - [14/Jul/2016:16:20:24 -0400] "GET / HTTP/1.0" 200 74545 "http://myblog.com/" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Max
+thon/4.4.3.4000 Chrome/30.0.1599.101 Safari/537.36"
+107.183.178.139 - - [14/Jul/2016:16:20:24 -0400] "GET /wp-login.php HTTP/1.1" 403 292 "http://myblog.com/" "Opera/9.80 (Windows NT 6.2; Win64; x64) Presto/2.12.388 Version/12.1
+7"
+107.183.178.139 - - [14/Jul/2016:16:20:24 -0400] "GET /wp-login.php HTTP/1.1" 403 292 "http://myblog.com/wp-login.php" "Opera/9.80 (Windows NT 6.2; Win64; x64) Presto/2.12.388
+Version/12.17"
+107.183.178.139 - - [14/Jul/2016:16:20:25 -0400] "GET / HTTP/1.1" 200 74545 "http://myblog.com/" "PHP/5.{3|2}.{1|2|3|4|5|6|7|8|9|0}{1|2|3|4|5|6|7|8|9|0}"
+107.183.178.139 - - [14/Jul/2016:16:20:25 -0400] "POST /xmlrpc.php HTTP/1.1" 403 290 "http://myblog.com/" "PHP/5.3.57"
+107.183.178.139 - - [14/Jul/2016:16:20:25 -0400] "GET / HTTP/1.0" 200 74545 "-" "PHP/5.3.57"
+54.234.214.67 - - [14/Jul/2016:16:23:19 -0400] "GET / HTTP/1.1" 301 - "-" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0"
+54.234.214.67 - - [14/Jul/2016:16:23:19 -0400] "GET / HTTP/1.1" 200 74545 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0"
+54.234.214.67 - - [14/Jul/2016:16:23:19 -0400] "GET / HTTP/1.1" 301 - "-" "Mozilla/5.0 (
+Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0"
+54.234.214.67 - - [14/Jul/2016:16:23:20 -0400] "GET / HTTP/1.1" 200 74545 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0"
+104.202.52.41 - - [14/Jul/2016:16:28:22 -0400] "GET / HTTP/1.0" 200 74545 "-" "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Maxthon/4.4.3.4000 Chrom
+e/30.0.1599.101 Safari/537.36"
+3.	Write a timeout() function that takes a timeout value in seconds and then executes the command (bash)
+1.	Just calling the coreutils 'timeout' is good to know but obviously doesn't showcase shell knowledge.
+2.	Explanation by way of example invocations:
+timeout 60 ls / # ← should return quickly
+timeout 50 sleep 90 # ← should be terminated at 50s mark
+3.	Tests basic looping / polling and that they know the $! variable.
+4.	Bonus points if they can return the same return code as the executed command. 
+I.e. They know the wait command.
+4.	Which days have my birthday fell on the most? (bash)
+1.	Quite similar to prior Apache unique count but also tests their resourcefulness in acquiring the day of the week values.
+2.	You may end up having to help with at least: date --date=2017-04-21 +%A
+1.	But let them handle the sequencing.
+3.	Expecting something like:
+4.	for year in $(seq 1978 2017); do date --date="$year-04-21" +%A; done \
+| sort | uniq -c | sort -nr
+5.	Is there a size limit on shell variables? (bash)
+1.	Start by asking the candidate that question. Do they think it's limited by memory of the machine?
+1.	I once hit this limit on old Solaris machines but may have been using ksh. 
+2.	Bash is unlikely limiting directly but instead being limited by the underlying system calls. See the execve(2) man page for details. Limit is coming from stack size. 
+3.	Bash will issue a “argument list is too long” whenever you then try to run a command.
+2.	Then ask them to programmatically find the limit.
+1.	Discuss how the limit may be imposed on the execve syscall and in what circumstances the shell would hit that. (Variable would need to be export'ed for bash to try to include it in a fork+exec)
+2.	Assuming they take the brute force method of just tacking on another character to a variable until no more, ask how they could improve the efficiency of their algorithm.
+6.	Ascii Histogram (Python, Ruby, etc - Good for Onsite)
+1.	This one could easily take the full time, so use appropriately
+Make sure you've done this yourself first too so you understand the corner cases and you can help guide the answer.
+2.	Print an ascii histogram from an input file of: 2 2 3 4 2 2 5 3 5 5
+3.	Output would be:
+4.	*
+* *
+** *
+****
+5.	Should preserve the order of digit seen (first column is four 2's, then two 3's, etc)
+6.	Implementation details
+1.	Mostly a question about data structures. In this case you needed an ordered object to hold counts but also need to keep track of which item has which value.
+2.	Perfectly fine to keep two data structures: List for the order seen, Hash for the frequency
+3.	Discuss the runtime complexity of the solution
+7.	How do you find all of the commands with 'top' somewhere in the name? (bash)
+1.	This tests a candidate's creativity along with shell knowledge.
+2.	Typically will get a for-loop type of answer but personal favorite is:
+echo $PATH | sed 's/:/ /g' | xargs ls | grep top
+8.	Can you provide a regex that will match a valid IP address?
+1.	This can be notoriously tricky with several edge cases.
+2.	Allow them to start simple, then remind them of the following edge cases (if necessary):
+1.	Ensure each octet doesn't exceed 255
+2.	Legal IP ranges
+1.	First octet can not be 0, e.g. and if routable value can not be 127
+Systems / Operational
+1.	What might the following error mean?
+1.	message: "Caused by: java.lang.OutOfMemoryError: unable to create new native thread"
+2.	Explore the idea that the message might not be very accurate, so what are all the possible failures.
+1.	Obvious first is memory truly exhausted
+Can spin into discussion of swap
+2.	Discuss the difference between spawning a new process vs. a thread
+What is truly unique to a thread? (stack)
+3.	Too many processes - reached a limit on the user
+How would you confirm / rule that out?
+2.	Describe what happens when you type: curl https://apple.com/
+1.	Idea is allow candidate to talk through each little detail and you can take tangents
+1.	Command execution
+2.	Networking related topics
+1.	DNS
+2.	Routing
+3.	Load Balancers
+3.	High availability / load balancing
+3.	List various http codes and what they mean. How do you interpret the responses from different Rest methods GET, PUT, DELETE.
+4.	What does system load 1min, 5min, 15min mean?
+1.	What is an ideal load average in a single processor system?
+2.	What is an ideal load average in multi processor system?
+3.	How does this relate to the “R” status (STAT) in “ps”?
+5.	How would you troubleshoot a 3-tiered application that is sporadically slow?
+1.	Explain that this is a role-playing question where they describe what they'd do and you give the answer as to what they see. E.g. “I'd run 'vmstat 5 5'” and then you tell them what details they get back.
+2.	I've described the environment with a LB in front of 2 x web servers (nginx), 2 x app servers (java, python, other app server), 2 x db servers (PostgreSQL). 
+3.	Allow the candidate to describe the ideal monitoring / tooling setup as well as if they setup the machine. 
+E.g. Perhaps they'd want 'sar' enabled with Splunk logging and other application level metrics being collected.
+1.	This becomes a tangent unto itself.
+4.	Typically like to explore how you determine if a process “looks healthy” and see if they're familiar with tools such as strace or related. (Does not always lead to this tangent)
+5.	You can pick what the “problem” is ahead of time. I've used the following:
+1.	One of the databases is no longer using indexes on a very large database. Allows you to explore if they're familiar with querying the DB for long running queries and/or if they're familiar with the EXPLAIN keyword.
+6.	Given a Linux box that has every package under the sun installed on it, but missing the “cp” command, how would you “cp /location1/file1 /location2/file2”? They should figure out solutions using piping, redirection, inodes, server/client, and coding a script. Here are some examples for you to think of and help guide them to, in case they are mentally blocked from one of these types of solutions:
+1.	cat /location1/file1 > /location2/file2
+2.	scp /location1/file1 /location2/file2
+3.	dd if=/location1/file1 of=/location2/file2
+4.	ln /location1/file1 /location2/file2 (how diff from ln -s? and why is -s cheating? is ln cheating all-around? why or why not?)
+5.	nc -l 1234 > /location2/file2 & nc localhost 1234 < /location1/file1 ←seems fair to remind them nc syntax if they at least think of nc
+6.	setup Apache/nginx/$webserver pointing DocumentRoot to /location1 and use curl/wget/$commandlineclient to copy into /location2/file2
+7.	open file with various editors and write to new location, show they know how to open/read/write with vi and emacs, and know about joe, jed, pico, nano, or other common mini terminal editors
+8.	write something in Python/Ruby/Perl/etc that opens one file and writes another, possibly recursively
+7.	Extend previous problem: recursively copy all of /location1 to /location2. Normally looks like “cp -R /location1 /location2”. Following are some ways to do it, in case neither you nor candidate can think of a way.
+1.	( cd /location1 && tar -cf - ./ ) | ( mkdir -p /location2 && cd /location2 && tar -xf -) ←typically you'll need to remind candidates that tar, when given a filename of “-” will pipe to STDOUT on -c, or read from STDIN on -x. Given that, they'll probably come up with a partially-correct solution. See how far they can get to that completely-correct solution. Also, do they know about tar's “-C $dir”?
+2.	scp -r /location1 /location2 ←if they already did scp above, this should be trivial
+3.	rsync -a /location1 /location2 ←same
+4.	code a Python/Ruby/Perl/etc script to recursively do this
+CI/CD - General
+1.	How do you automate release management in CD (Continuous Delivery)?
+1.	Look for terms like: automating the entire lifecycle — development, version control, builds, repositories and artifact delivery, tests and acceptance, server provisioning, application configuration to production deployment.
+2.	Describe the most significant gain you made from automating a process through configuration management tool (Chef, Puppet, Ansible or SaltStack)?
+3.	What are your favorite deployment techniques and why?
+1.	Look for terms like: Zero downtime, Canary, Blue/Green deployments
+4.	What are some of the DevOps KPI (Key Performance Indicators)?
+1.	Look for terms like: Uptime vs downtime, Errors ratio, Responsiveness, Reject ratio, Load capacity, time-to-market
+5.	How can you reduce load time of a dynamic website?
+1.	Look for terms like: webpage optimization, cached web pages, quality web hosting, compressed text files, Apache fine tuning.
+6.	How would you prepare for a migration?
+1.	This question evaluates candidate experience of real projects with all the awkwardness and complexity they bring. Look for terms like: cut-over, dress rehearsals, roll-back and roll-forward, DNS solutions, feature toggles, branch by abstraction, and automation.
+CI/CD - Jenkins
+1.	How did you manage jenkins thru automation? 
+2.	How did you handle jenkins updates (including plugins)?
+3.	Have you used jenkins groovy? When?
+4.	How to access jenkins REST API? Different format? XML and JSON?
+5.	What is the common performance issue?
+1.	Factors that affect performance
+1.	Number of slaves
+1.	have you obtained thread dump?
+2.	Degree of concurrent HTTP accesses to the master will have impact to memory or CPU?
+1.	CPU is the answer
+3.	Number of jobs
+1.	do you create jobs thru template?
+4.	Number of builds
+1.	how do you prune build history?
+6.	How will you scale jenkins?
+1.	horizontal vs vertical
+Docker
+1.	Name a few docker namespaces?
+2.	What is cgroup (control groups) in docker?
+3.	What are the different types of docker storage drivers you have worked with?
+4.	How did you deal with docker persistence? Have you used any docker volume plugins?
+5.	How did you configure docker networking to run full stack app?
+Personality / Team Fit Questions
+1.	Tell me about a project that you're particularly proud of?
+1.	This is deliberately vague and gives the candidate an opportunity to do the talking while we learn insights on the type of person they are.
+2.	What are your interests from technical perspective?
+3.	Tell me about a time which you disagreed with another team or supervisor, etc and how did you resolve the problem?
+1.	Idea is to get an idea on how well the candidate can self-manage negotiations with other teams to come to a common ground solution.
+4.	Who is your toughest user and why?
+5.	What is the unforgettable mistake you did in your career and what did you learn?
+
+Interview scripts for Searchable Serialized String Format 
+The problem is at https://coderpad.io/questions/32261 
+This document describes the scripts and rubric for the interview problem.
+Note: We want to test the candidate: 
+•	(1) the sense of algorithm complexity (if he/she can spontaneously realize that linear complexity is not good enough); 
+•	(2) the coding habits (if he/she has a good coding style and habits, e.g., check the memory allocation succeed, check the pointer is not null before freeing a memory);
+•	(3) debug skills (if he/she print out some key information to help debug instead of just through trail-and-error.)
+Pace of the interview
+Suppose the interview starts at 1PM. The time indicates when the section should finish.
+1.	1:05pm (5min): Introduction
+1.	Ask the candidate to introduce himself. 
+2.	The plan of the interview
+2.	1:15pm (10min): Explain the problem (Can be less time)
+1.	Make sure candidate understands the problem
+3.	1:25pm - 1:30pm: Discuss the design
+4.	1:30 - 2pm: Coding & debugging
+1.	ATT: How is his coding habit?
+1.	Did he check the boundary conditions?
+2.	Did he consider the corner cases?
+3.	Is his coding style good?
+4.	Can he explain his code, such as the rationale why he choose to write it in a certain way?
+1.	e.g., why use ++i instead of I++?
+5.	If finish find(), ask the candidate to finish findRange()
+Hints
+1.	Serialization can take an arbitrary long time, we want to speed up find()
+2.	After you serialize the string vector into the buffer[], how do you separate these strings?
+1.	Simple approach: use \0
+2.	Better solution: use a header to indicate the string length
+3.	In order to achieve find() without deserializing the buffer[], we should be able to know if a string str1 is not equal to another string str2, without comparing their content.
+1.	The more confident we know str1 != str2, the less number of strings we need to deserialize
+2.	Note: this hint suggests candidate to come up with the signature of the string.
+4.	Can we speed up the search from O(n) time to O(log(n)) time?
+Design choices
+1.	Possible design 1-a: Protocol buffer
+1.	Put a header in each string. Insider header, it includes the string size and the string’s signature (e.g., checksum)
+2.	Linearly search on the header only.
+3.	Time complexity: O(n)
+4.	Cons:
+1.	linear time search
+2.	The whole char buffer may not fit in the RAM, you will need to access disk to get the header data
+2.	Possible design 1-b: 
+1.	Based on design 1, move all headers into the front of the buffer without sorted. 
+2.	Pros
+1.	Can put all metadata into RAM, avoid disk access
+3.	Cons
+1.	Still linear search
+3.	Possible design 1-c:
+1.	Based on design 2, sort the metadata based on the string’s signature
+2.	Pros
+1.	Enable binary search
+4.	Possible design 2: 
+1.	Goal: Know if the string does NOT exist n the buffer[] without deserialization. But if the string is in the buffer[], needs to compare each string in the buffer
+2.	In buffer[], each string has a header to include the string’s signature, and has \0 to indicate the end of the string.
+3.	Put all headers into the beginning of the buffer[]. 
+1.	If we use a hash map, O(1) time to tell a string is NOT in the buffer
+2.	If we put headers unsorted, O(n) time
+Question about design improvement
+1.	Can we achieve an average constant time find()?
+1.	If use hash map, what is the tradeoff? 
+2.	What if two strings have the same signature?
+1.	How to handle hash collision?
+3.	What if we need to add a new vector of string into the buffer[]?
+1.	Each vector of strings is provided in different time. 
+4.	What if we have a streams of strings as input?
+1.	How do we serialize the data?
+2.	How do we find()?
+3.	Pitfall: We need to define the timestamp! At which point, we should decide if a string to search is in the buffer[]
+4.	At t1, we have str1 into buffer[]; at t2, we search str2. If t1 == t2, what should we do?
+Grading schemes: what to cover
+1.	Texts to give to candidates: introduce the problem
+2.	Common pitfalls
+3.	Hints
+4.	How to grade the questions
+5.	Example solutions: good and bad
+6.	TODO: you can write down your scripts for the interview
+
+Note: When dial from the phone in the conference room, need to add 91 as prefix of the phone number
+
+Interview Questions Master List
+PURPOSE: To help with interview coordination and share knowledge. 
+
+If you ever ask a new question, that's great - but add it here too so others can also benefit/learn. 
+Distributed Systems
+•	Smart bouncing a Solr cluster
+•	Discuss possible improvements to Solr by using Http2. Challenges and expectations
+Solr-specific
+•	Explain Leader Initiated Recovery
+•	Overseer queue filling up problem - what do we do?
+•	What's the life cycle of an update in Solr?
+Design
+•	Design a KV store
+•	Design backup to S3
+o	back up all replicas? just leader? cost of backing up? rate limiting?
+Data structures / algorithms
+•	Find the maximum contiguous sum of an array of integers
+•	Merging 2 sorted arrays of integers/multi-merge
+•	Check if binary tree is a binary search tree 
+•	Given a binary tree in which the node has an extra pointer called Neighbor, how to connect each level without using extra space, and the tree is not balanced or complete. 
+•	Given a set of markers of different colors and their caps shuffled, how many swaps does it take to arrange them in order
+•	How many snapshots are needed to cover a predefined set of intervals
+Ops-y Coding
+•	Finding duplicate files in a filesystem
+•	Call an http endpoint of a set of hosts, making sure that they all acknowledged within the same minute
+
+Interview Feedback Examples
+As part of the overall SRE Hiring process, this page provides examples of phone screen / interview feedback. 
+Phone Screen:
+Example:
+Feedback on phone screen for Jane Candidate on October 15, 2015:
+Jane seemed very thoughtful and measured in her responses to my questions. Solid sysadmin background. Very interested in doing more automation work and collaborating with s/w engineers. Detailed understanding of several data structures. Asked interesting follow up questions.
+Concerns might be around the reason she left her last job. Also seemed a little hesitant, might indicate confidence challenges. 
+Fit: 3
+    Measured and personable. Passionate about automation. Provided good answers to questions on prioritization and ownership.
+Technical Skills: 3
+    Covered breadth of focus points in security exercise including OS minimization, closing ports and service minimization. Asked probing questions in troubleshooting scenario.
+Software Development: 3
+    Able to define various data structures. Good configuration management experience with Ansible. Able to explain Big(O) and efficiency of HashTable vs. Array. 
+Architecture: 1
+    Not a lot of experience in large scale distributed systems. Talked about service discovery. 
+Recommendation:
+  Onsite Interview.
+
+Onsite Interview:
+Example:
+Feedback on onsite interview for James Candidate in November 3, 2015:
+    James has a strong pedigree with a CS bachelors and a masters in Information Networking from MIT. James brings a breadth of operational experience to the table and has worked as a Sysadmin, a Network Engineer, Network architect, and Senior CloudOps Manger. At Snapchat, James currently works as a DevOps engineer focused on messaging, but was previously in charge of automating the build / release engineering effort.
+    James is very interested in improving network efficiency with respect to messaging and queuing. This is an area that is core to our service and has historically gotten little attention. I feel confident that James could quickly make a measurable difference in ISO and to our service by improving the reliability of some of the core challenges such as state replication and OOB client communication.    
+    James' communication skills were top notch. He's been involved in many exec outage reviews and mentioned a time he pushed back on a developer effort that their existing infrastructure wouldn't support. He was pleasant in our discussions and very inquisitive about the strategies and decisions of focus for the next 6-12 months.
+    Initial focus areas for James will be on improving our current monitoring efforts and deep diving into the current messaging architecture to look for potential areas for improvement in our client/server efficiency. Below is team feedback with scores. 
+Fit: 3.33
+    Currently he's in a DevOps role with his current company so he fully understands what the role might demand from him. I believe he is a team player & wouldn't have issues fitting in. He has good communication skills, talks well and able present his ideas with ease. He certainly has good customer service skills. With regards to ownership, I gave him a scenario of how will he tackle this situation when 4 EPMs walk up to him as request him to complete their projects asap. Answered by stating he'd gather information from each, consult with team members and make an informed decision. 
+    Seemed like a great fit. Talked about how he'd be able to handle a difficult situation. Seems like he shares apple values / culture. He seemed like he adopted a culture of debeate. He likes to take a complex system and understand it from top to bottom.
+    Gave up front answer, it was clear and concise. Appeared confident, but not arrogant. Wanted more experience in a large scale organization. Used to fast moving environments. He is eager to become a contributing team member.
+Technical Skills: 2.50
+    He was able to walk through the high level steps of setting up passwordless SSH access, but focus area has been deep in networking and messaging recently. (in the application space). Knew about using ssh-agent and 2FA.
+    Understood and called out the importance of good monitoring systems to look at time series/historical trends/data about the machine to get a handle on isolating a problem, as well as comparing against like systems. Asked well pointed questions in the troubleshooting section.
+    Deep network knowledge. Less breadth of experience in the broader space. Knows messaging technologies including RabbitMQ, ActiveMQ, Kafka.      
+
+Software Development: 3.75
+    Limited java experience. Most knowledge was low level (C based). Very comfortable with network protocols. Was kind of soft spoken. Spent the majority of time on the stock algorithim question. Didn't get bogged down and had a flexible approach. Initially gave a solution that is O(n^2) then went to a explore a more efficient one. Was able to discuss tradeoffs in varying efficiencies, and got 50% of the way through a dynamic algorithm solution. Once realized the additional complexity was genuinely interested in solving it.
+    Automation pretty good. Currently uses puppet and Hiera. Provided successful chaining example using Templates. Netstat skills, process listening on port. 
+    Previous task was to automate filesystem checks with scripts that could be run ad-hoc and would eventually run automatically. Was responsible for migrating 20 of these scripts and consolidated into a shared library rather than duplicating effort across the similar manifests.
+Architecture: 3.5
+    Listed microservices, then had a db schema. Explained utilizing a consensus algorithm in decision making. Interesting response to question about "follower type" relationship using a graph database. 
+    Went into detail about latency and physical distance playing a key role in the "partitioning" aspect of the CAP theorem. When pressed to make a decision, he said he would opt for availability with eventual consistency as a design goal in a distributed system. 
+Recommendation:
+  Extend offer for iCloud Content SRE at mid ICT4 level.
+
+
+Network
+
+What is the "official" 7 layer OSI model? Examples?
+L7 - Application (HTTP, telnet, SSH, SMTP, DNS)
+L6 - Presentation (OS APIs)
+L5 - Session (TCP)
+L4 - Transport (TCP)
+L3 - Network (IP)
+L2 - Data Link (Ethernet frams, Token ring)
+L1 - Physical (cables, voltages, signals)
+What is the "collapsed" 4 layer TCP/IP model? Examples?
+L4 - Application (HTTP, telnet, SSH, SMTP, DNS)
+L3 - Transport (TCP)
+L2 - Network (IP)
+L1 - Network Access (Ethernet frames, Token ring)
+What is an ACL?
+A non-stateful uni-directional packet filtering mechanism based on source IP, destination IP, protocol and port.
+What is Subnet ?
+Logical division of IP addresses into smaller ranges
+What are different network Classes ?
+Class A /8, 
+Class B /16,
+Class C - /24
+Refer:
+IP Address Class	Total # Of Bits For Network ID / Host ID	First Octet of IP Address	# Of Network ID Bits Used To Identify Class	Usable # Of Network ID Bits	Number of Possible Network IDs	# Of Host IDs Per Network ID
+Class A	8 / 24	0xxx xxxx	1	8-1 = 7	27-2 = 126	224-2 = 16,277,214
+Class B	16 / 16	10xx xxxx	2	16-2 = 14	214 = 16,384	216-2 = 65,534
+Class C	24 / 8	110x xxxx	3	24-3 = 21	221 = 2,097,152	28-2 = 254
+
+How many IPs in /24 , /16, /8 or even some odd numbered subnet ?
+  Refer above diagram: 
+Acronym aside, What is VLAN ?
+A virtual broadcast (collision) domain.
+Accomplished via special tags in Ethernet frames.
+
+TCP vs UDP
+What is the difference between TCP and UDP.
+UDP is stateless (no sessions, send and forget no guarantee the packet will be received, i.e. no acknowledgement), TCP is stateful (sessions with error correction and flow control) 
+What are TCP Flags and what are their purpose?
+Used to control network communications and is used as a method to establish connections, correct for packet loss, adjust flow control and tear down connections.  
+SYN – This bit is used at the start of the TCP handshake to establish the connection.
+URG – Urgent Used to indicate that “urgent” data is carried in the packet. The receiving TCP Stack can process the urgent data in this packet immediately.
+ACK – Acknowledgement  is used to indicate that data has been successfully received (i.e. using sequence numbers ). Also used when establishing and tearing down TCP connections. 
+PSH – Push is often set at the end of a block of data, signaling the receiver to process the block of data (it asks to "push" the data up the stack). 
+FIN – Used to gracefully tear connections down. Each side of the connection sends a FIN, followed by an ACK, then the connection is finished. (Note: both sides must send a FIN to end the connection we are full duplex in TCP)
+RST – Reset is used to inform the receiver that the sender has shut this connection down. A reset is an abrupt way to do this, but may be legitimately seen at the end of some TCP connections.
+CWR Congestion Window Reduced - Only used in TCP connections where Explicit Congestion Notification is used. Rarely seen in most TCP Conversations. ECN allows routers to inform the TCP endpoints that their transmit buffers are filling due to congestion. This allows the TCP endpoints to slow their data transmission to prevent packet loss. The CWR field is set by the sender to show that it received a TCP segment with the ECE flag set.
+ECN – Echo – Used only by ECN-TCP connections. The ECN-Echo is sent to inform the other side of the TCP connection that it received an ECN notification from the network. This may trigger a TCP Slow Start. Like the CWR field, this is rarely seen in connections.
+
+Systems/OS
+
+What is Kickstart/Jumpstart/Netinstall ?
+  Network installation of OS remotely.
+Explain kickstart process ?
+  Expect to talk about PXE, DHCP IP allocation/Leasing, Kickstart file, downloading images over http/ftp/nfs.
+How do you plumb IP manually on a NIC ?
+  modprobe,ifconfig,route,iproute,
+What is difference between process and Thread ?
+Process executes in it private environment with its own memory,
+threads are integral part of Process which can execute any part of the code. It share the memory and open files of process. 
+Apache,Load balancers, HTTP, DNS
+
+Can you write HTTP request on whiteboard ?
+  Expect sample HTTP request including URI,URL, Request method (GET,POST,PUT,HEAD,DELETE) ,headers (mandatory HOST header), Body
+Different HTTP response codes.
+  1XX - Informational
+  2XX - Success
+  3XX - Redirect
+  4XX - Client Error
+  5XX - Server Error
+What's your first guess if you get 500 ?
+  Check the server side.
+Explain me Cache-Control headers ?
+  ETag, Last-Modified, If-Modified-Since, Cache-Control:  Max-Age=x,Private,Public, no-cache, must-revalidate etc.
+What is SSL, name few Ciphers ?
+Secure Socket Layer - secure HTTP connections, data transfer with encryptions and decryption between client and server.
+SSL troubleshooting questions
+Cipher mis-matches, Cert expired, wrong cert bindings etc.
+What Protocols DNS use ? 
+  Expect to hear both TCP and UDP. 
+  TCP for Zone transfers between name servers or when the response size is > 512 bytes which is usually zone transfers or 'dig +tcp' to explicitly tell TCP.
+  UDP for resolution queries and responses between client and DNS
+
+JVM
+
+How do you determine memory pressure on JVM ?
+  Expect jmap to see current heap usage Vs allocate memory.
+Explain Garbage Collection ?
+  Expect different phases of GC like young Gen, Old Gen, Survivor ratio, Full GCs.
+How do you troubleshoot higher GC times ?
+  Expect jstat command or some tool like dynatrace.
+What are heap dumps, how do you take and analyze them ?
+  heap dumps are current state of Java heap allocations. Jmap to collect, use tools like eclipse to analyze them ( Not mandatory as we most of us don't know this )
+
+Storage
+
+What is iNode ?
+inode is a datastructure tha contains metadata about a file like name, permissions, disk block address and its offset etc.
+When you create file, you see no space left on device but when you 'du -h' show space left on device. What could be the reason ?
+Ran out of inodes.
+What are different Raid levels ?
+Raid 0 - Striping
+Raid 1 - Mirroring
+Raid 1+0 - Stripe of mirrors
+Raid 0+1 - Mirrors of Stripe
+Raid 5 - Distributed parity.
+
+
+Which among 1+0 and 0+1 Raid would you prefer ?
+whatever Gena prefers 
+  [Gena to add more]
+Application Scaling, Architecture, Distributed systems.
+
+[Kurt to add more]
+App deployments, app bouncing. Also ask about caching servers (memcache, Redis), distributed systems like Redis, Solr, swimlaning databases, app servers, 
+
+Scripting
+
+- How do you pass arguments to shell script ?
+- Rename files in a directory with .ext.
+- Give some tasks ?
+- Regex 
+
+
+Put your interview skills to the test! Mock interviews are a great way to receive constructive feedback on how you can improve your answers and performance. These practice interview sessions are designed to challenge you and prepare you for future interviews.
+Preparing for your Mock Interview - Structuring your response
+
+S - Situation - Describe the problem you encountered
+T - Task - What was required of you
+A - Action - What you did to solve the problem
+R - Result - How brilliantly the situation turned out
+
+For behavioral based questions, the SHARE model might work better:
+S - Situation - Describe a specific situation
+H - Hinderances - Identify any roadblocks or challenges faced
+A - Action - What action did you take in response to the situation?
+R - Result - Discuss the results or outcomes from your action(s)
+E - Evaluate - Explain and evaluate what you learned from the experience
+
+When you’re done with your interview, take a break.  After a short period of time, ask yourself the following questions and make notes along the way:
+•	How fully did you answer the questions?
+•	How convincing were your answers?
+•	Is there anything you would change if you were asked again?
+•	How long was your answer?  Could it be more concise?
+•	How was your body language?  Did it match your words?  Did you fidget?
+•	Are there any words that you repeat excessively?  (“Um” or “actually” are commonly used words when people are nervous).
+•	Where did your eyes go?  Were you maintaining eye contact with your interviewer?
+•	How was the pace of your answers?  Did you take too long to answer? Or did you jump into answers quickly and without enough thought?
+
+
+Systems
+vmstat output
+procs -----------memory---------- ---swap-- -----io---- --system-- -----cpu-----
+r  b   swpd   free   buff  cache   si   so    bi    bo   in   cs us sy id wa st
+13 30      0 15964332 3898508 69470128    0    0   127   445    0    0 15  2 82  0  0   
+15  1      0 16113212 3898540 69320912    0    0 22124    96 24180 6227 37  4 47 12  0  
+14  8      0 16126776 3898544 69306040    0    0 24108 97624 21042 6627 39  5 48  8  0  
+13 16      0 16120332 3898548 69313392    0    0 21340 66640 17378 6028 36  4 46 15  0  
+13 14      0 16130820 3898588 69305856    0    0 21648 13640 18711 9604 34  4 35 27  0 
+•	Describe all the columns
+•	What's the difference between buff and cache memory?
+•	Is this system healthy? Why? What might it be doing?
+•	Is this system performance-limited? By what? Why? What other tools might you use to confirm it?
+
+
+
+ls -al
+
+"you type 'ls -al' at your shell and it prints out a directory listing, what has to happen to produce this?"
+•	shell parsing
+•	fork/exec()
+•	environment
+•	process table
+•	dynamic library loading
+•	reading the inode (name -> inode resolution)
+•	basic vfs
+•	stat()s for the '-l'
+•	dotfiles - convention (the -a)
+
+
+Further discussion
+•	What's in /proc?
+•	Why fork()?
+•	How does chroot() work?
+
+
+Networks
+How does ping work?
+$ ping store.apple.com
+PING e2850.a.akamaiedge.net (23.74.123.171): 56 data bytes
+64 bytes from 23.74.123.171: icmp_seq=0 ttl=60 time=9.459 ms
+64 bytes from 23.74.123.171: icmp_seq=1 ttl=60 time=17.665 ms
+64 bytes from 23.74.123.171: icmp_seq=2 ttl=60 time=8.262 ms
+64 bytes from 23.74.123.171: icmp_seq=3 ttl=60 time=9.671 ms
+^C
+--- e2850.a.akamaiedge.net ping statistics ---
+4 packets transmitted, 4 packets received, 0.0% packet loss
+round-trip min/avg/max/stddev = 8.262/11.264/17.665/3.734 ms
+•	Where does e2850.a.akamaiedge.net come from? (Can follow up with a discussion of how DNS works)
+•	Why ICMP? (What is ICMP?)
+•	I did this through a NAT, how does that change things?
+•	Why might store.apple.com not resolve to something within Apple?
+•	What's the "ttl=" value? What does this one imply?
+•	What sort of things might cause packet loss?
+•	What other statistics might you be interested in to help you?
+How does traceroute work?
+$ traceroute nserver.apple.com
+traceroute to nserver.apple.com (17.254.0.50), 64 hops max, 52 byte packets
+1  dsldevice (192.168.1.254)  1.637 ms  1.462 ms  1.272 ms
+2  a.gormless.thn.aa.net.uk (90.155.53.51)  12.438 ms  9.046 ms  9.137 ms
+3  a.aimless.thn.aa.net.uk (90.155.53.41)  8.910 ms  9.084 ms  8.876 ms
+4  c.aimless.thn.aa.net.uk (90.155.53.43)  9.169 ms  9.524 ms  11.359 ms
+5  ge-1-0-0-0.mario.as34270.net (85.91.238.217)  9.996 ms  9.238 ms  9.713 ms
+6  xe-0-0-0-0.luigi.as34270.net (85.91.224.10)  9.497 ms  9.139 ms  23.882 ms
+7  ge-7-23-780.car3.london1.level3.net (212.187.200.145)  9.475 ms  19.668 ms  11.120 ms
+8  ae-1-60.edge8.sanjose1.level3.net (4.69.152.20)  150.527 ms
+    ae-3-80.edge8.sanjose1.level3.net (4.69.152.148)  155.170 ms
+    ae-1-60.edge8.sanjose1.level3.net (4.69.152.20)  150.525 ms
+9  209.244.104.134 (209.244.104.134)  150.788 ms  149.700 ms  154.461 ms
+10  17.0.129.98 (17.0.129.98)  155.014 ms
+    17.0.129.80 (17.0.129.80)  147.102 ms  153.778 ms
+11  17.0.129.103 (17.0.129.103)  148.393 ms
+    17.0.129.101 (17.0.129.101)  151.779 ms  151.557 ms
+12  17.148.254.27 (17.148.254.27)  147.469 ms
+    17.148.254.31 (17.148.254.31)  151.256 ms
+    17.148.254.27 (17.148.254.27)  152.359 ms
+13  * * *
+14  * * *
+15  * * *
+16  * * *
+17  * * *
+18  * * *
+19  * * *
+20  * * *
+^C
+•	How did traceroute generate this output - what did it send, what did it get back? What other responses might it get?
+•	How many likely routes are being balanced here? Why might we see more than one?
+•	Why is there a ~135ms difference between hop 7 and hop 8? Is car3.london1.level3.net really plugged straight into edge8.sanjose1.level3.net - why can't you tell?
+•	What would happen if I tried to reach the dsldevice from the open internet in the first hop? Why?
+•	Why do I see * * *? What responses should I get - how do I (normally) know when to terminate?
+•	Why do we use UDP for it? Can we use TCP?
+•	Why do we see "64 hops max" in the first line of output? What would happen if it were further than 64 hops away?
+telnet www.apple.com 80
+$ telnet www.apple.com 80
+Trying 23.214.133.172...
+Connected to e3191.dscc.akamaiedge.net.
+Escape character is '^]'.
+•	DNS (How does DNS work - how do the root servers work - how might I build a root server - what challenges do you face in doing that)?
+•	Routing (how does routing work - what does a routing table look like - longest prefix matching etc)?
+•	How does ARP work (part of how routing works)?
+•	3-way handshake - why 3 ways?
+•	What's a port? What defines a TCP connection (how do I do the same connection multiple times from multiple machines)?
+•	Why am I connecting to akamai rather than apple? If I were able to connect to apple directly - how might you build the infrastructure - load balancing, global lb etc.?
+Databases
+Digital Downloads Inc
+
+I have a fictitious (US) company offering digital downloads of software - they have the database schema as defined below. We want to consider what kinds of queries we want to do on this data - what indexes we're going to need and then how to branch out to supporting more features.
+CREATE TABLE product (
+    product_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255),
+    description BLOB,
+    version VARCHAR(255),
+    asset VARCHAR(255),
+    cost DECIMAL(10, 2)
+    );
+CREATE TABLE user (
+    user_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    email VARCHAR(255) NOT NULL,
+    email_verified BIT(1),
+    name VARCHAR(255),
+    addr_line_1 VARCHAR(255),
+    addr_line_2 VARCHAR(255),
+    city VARCHAR(255),
+    state CHAR(2),
+    zip INT(5)
+    );
+CREATE TABLE order (
+    order_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    created DATETIME,
+    settled DATETIME,
+    total DECIMAL(10, 2),
+    tax DECIMAL(10, 2)
+    );
+CREATE TABLE order_line (
+    order_line_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    order_id BIGINT NOT NULL,
+    product_id BIGINT NOT NULL,
+    download_count INTEGER
+    );
+CREATE TABLE rating (
+    rating_id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    product_id BIGINT NOT NULL,
+    created DATETIME,
+    stars INT(1),
+    desc BLOB
+    );
+Warmup questions:
+•	Why is it a good plan to have "synthetic primary keys" such as the order_line.order_line_id in InnoDB / Oracle even if it's not referenced?
+•	What's the difference between FLOAT(10, 2) and DECIMAL(10, 2), such as in the product.cost / order.total / order.tax and why would I use one over the other?
+•	Is this schema normalised? What would make it so, and what difference would that make to queries?
+•	What constraints does this schema enforce on the business workflow - eg. can we have baskets of non-registered users? why not?
+Existing schema problems:
+•	Queries we want to do (what indexes might we need for this?)
+o	Show product page with associated rating and most recent rating text (version?)
+o	Get top n products by download count? (downloads by unique users?)
+o	Is user allowed to download this product?
+o	How much money have we taken this month?
+o	How many downloads of each product did we have? (ie. how much do we owe?)
+o	How many users didn't convert (ie. pay for their order)?
+o	Did we have users who paid and didn't download?
+New features (how might we change the schema to support - for this part, don't worry about the transition - see below for that):
+•	Internationalisation
+o	Addresses
+o	Varying cost, restrictions on product (eg. crypto)
+o	Currencies
+•	Anti-Fraud
+o	Ratings stuffing
+	by IP address
+	has user bought anything? has user bought this product?
+	other evidence that user might be fraudulent - setting on user?
+	domain-part of email recently registered
+	blacklisting
+o	Overly aggressive downloading vs usability/device problems and download failures
+o	Known problematic credit cards
+o	Geo IP
+•	Want information on performance of download service
+•	Storing credit card details for "one-click"
+•	Product release date - (special launch)
+•	"Free upgrades" - "if you have version <x> or later, you can get <y> free" or lower cost upgrades?
+•	Offer bundles
+•	Music / video as well as software
+•	Age verification (at least pass on liability - by asking user to assert they're "old enough" - follow-up - different rules in different places - is this per user? per product?)
+For further discussion:
+•	How do we go about transitioning the schema? What sort of problems might we encounter?
+
+
+Coding Exercises - Filtering lists
+Similar Pages
+Incoming Links
+This place is restricted, so you must join to create or reply to content. Ask to Join
+Actions
+Created by Gino Ledesma on Oct 2, 2014 3:07 PM. Last modified by Gino Ledesma on Oct 2, 2014 5:23 PM. Everyone at Apple can see this.
+Description
+Given a list of variable size containing strings, write a function to filter out duplicates.
+Input
+A list containing strings appearing in any order
+Output
+A list without duplicate values
+Example
+Input: ['a', 'b', 'c', 'd', 'd', 'e', 'd', 'a', 'c']
+Output: [a', 'b', 'c', 'd,' 'e']
+Difficulty
+Easy
+Category
+Data Structures, Algorithms
+Tips
+•	Many ways of implementing this:
+o	Scan the list twice keeping track of what's been seen (quick and dirty solution, but slow)
+o	Sort the list and walk through it, discarding identical values along the way
+o	Use a hash to keep track of the elements in the list and return the keys from that hash
+Considerations
+•	What are the implications of using a hash? Pros? Cons?
+Variations
+1.	Modify your solution to preserve the order in which the elements were seen in the input. For example, if the input is ['a', 'b', 'b', 'x', 'c', 'x', 'd'], return ['a', 'b', 'x', 'c', 'd'].
+2.	Return only the elements that did not have duplicates. For example, if the input is ['a', 'b', 'b', 'c'], return ['a', 'c']
+Example Implementation
+1.	import sys  
+2.	  
+3.	def use_set(elements):  
+4.	    # This uses python's internal set() method that returns  
+5.	    # an unordered set of unique elements  
+6.	    return list(set(elements))  
+7.	  
+8.	def use_hash(elements):  
+9.	    # Store the elements as keys in a dictionary (hash)  
+10.	    unique = { x:0 for x in elements }  
+11.	    return unique.keys()  
+12.	  
+13.	def use_loop(elements):  
+14.	    # Sort the list and discard any repeating elements  
+15.	  
+16.	    prev = None  
+17.	    unique = []  
+18.	    for x in sorted(elements):  
+19.	        if x != prev:  
+20.	            unique.append(x)  
+21.	            prev = x  
+22.	    return unique  
+23.	  
+24.	if __name__ == '__main__':  
+25.	    elements = sys.argv[1:]  
+26.	    print ' '.join(use_set(elements))  
+
+
+Coding Exercises - Stack's Largest Value
+Similar Pages
+Incoming Links
+This place is restricted, so you must join to create or reply to content. Ask to Join
+Actions
+Created by Gino Ledesma on Oct 2, 2014 3:46 PM. Last modified by Gino Ledesma on Oct 2, 2014 6:17 PM. Everyone at Apple can see this.
+Description
+Write a stack class has a method called getLargest() that returns the largest element in the stack. The class must support the methods push() and pop().
+
+
+
+Input
+A list of integers that will be fed into the stack
+
+
+Output
+The largest value in that stack
+
+
+Example
+
+
+
+Prototype:
+1.	class ModifiedStack():  
+2.	   def push(element):  
+3.	       pass  
+4.	  
+5.	   def pop(element):  
+6.	       pass  
+7.	  
+8.	   def getLargest():  
+9.	       pass  
+
+
+Input: 1 5 6 8 3
+Output: 8
+
+
+
+Difficulty
+Easy
+
+
+Category
+Data Structures
+
+
+
+Considerations:
+•	There are performance considerations to consider in how/where to keep track of the "largest" value. Walking through all the elements could be O(n). Using an internal variable could be O(1), but recomputing it on a pop() could mean O(n).
+•	It's possible to use a stack to keep track of the largest value as well.
+
+
+Example Implementation:
+1.	class Stack(list):  
+2.	    """ 
+3.	    Python's list construct can already be used as a stack as it supports 
+4.	    append and pop operations. 
+5.	    """  
+6.	  
+7.	    def push(self, element):  
+8.	        """ 
+9.	        An alias to python's built-in append() operation 
+10.	        """  
+11.	        self.append(element)  
+12.	  
+13.	    def peek(self):  
+14.	        """ 
+15.	        Returns the element at the top of the stack or None if empty 
+16.	        """  
+17.	        return self[-1] if len(self) > 0 else None  
+18.	  
+19.	class MaxStack(Stack):  
+20.	    # Use a stack to track the largest elements we've seen  
+21.	    __largest_stack = Stack()  
+22.	  
+23.	    def push(self, element):  
+24.	        super(MaxStack, self).push(element)  
+25.	        if element >= self.__largest_stack.peek():  
+26.	            self.__largest_stack.push(element)  
+27.	  
+28.	    def pop(self):  
+29.	        element = super(MaxStack, self).pop()  
+30.	        if element == self.__largest_stack.peek():  
+31.	            self.__largest_stack.pop()  
+32.	        return element  
+33.	  
+34.	    def getLargestElement(self):  
+35.	        return self.__largest_stack.peek()  
+
+
+
+Coding Exercises - Tail
+Similar Pages
+Incoming Links
+This place is restricted, so you must join to create or reply to content. Ask to Join
+Actions
+Created by Gino Ledesma on Oct 2, 2014 3:52 PM. Last modified by Gino Ledesma on Oct 2, 2014 4:41 PM. Everyone at Apple can see this.
+Description
+Write a program that displays the last part of a file.
+Input
+Filename
+Output
+Last 10 lines of the input.
+Example
+Example 1:
+example1.txt
+alpha
+bravo
+charlie
+delta
+echo
+foxtrot
+golf
+hotel
+india
+juliet
+kilo
+lima
+Input: example.txt
+Output:
+charlie
+delta
+echo
+foxtrot
+golf
+hotel
+india
+juliet
+kilo
+lima
+example2.txt
+alpha
+bravo
+charlie
+delta
+echo
+Example 2:
+Input: example2.txt
+Output:
+alpha
+bravo
+charlie
+delta
+echo
+Difficulty
+Medium
+Category
+Data Structures, Algorithms, Parsing, Input/Output, Encoding
+Considerations
+•	How would you handle "non-printable" input (e.g. "binary" data)?
+•	What if the input type is FIFO?
+•	What is the behavior of the program when the input's newline (EOL) is a linefeed (<LF>), carriage return (<CR>), or carriage return-line feed (<CR><LF>)?
+•	What happens if there is no end-of-file (EOF) marker?
+Variations
+•	Modify the program to support reading from standard input (STDIN)
+•	Modify the program to "follow" the contents of a file as its appended to
+
+
+Data Structures
+•	You wrote a program that crawls the web and are keeping track of URLs that you've visited. What data structures would you consider if you need to maintain this list in memory (a constrained resource)?
+o	Hashes, Tries, and Bloom Filters: ask "why" these are efficient
+•	What data structures would you consider for implementing a "word auto-completion" feature?
+Databases
+•	What do database indexes do? How would a basic implementation of an index look like?
+HTTP
+•	Describe POST and GET
+•	Differences between PUT and POST
+•	Describe the HTTP/1.1 use of 100-continue status (client sends request expecting server 100-continue before proceeding)
+o	Fairly useful for clients asking the server if it's allowed to continue before proceeding with the next operation (e.g. submitting a payload over 100MB)
+Object Oriented Programming
+•	Describe constructors and destructors
+Operating Systems
+•	What is the difference between a process and a thread?
+Coding Questions
+The problems and exercises listed in this category are suitable for "quick coding" sessions that can be handled as mail-in homework, online, or on-site whiteboard sessions. The tips are meant as helpful hints for candidates if they get stuck. For online coding sessions, you can use services such as CollabEdit  or Stypi.
+•	Easy Difficulty
+o	Coding Exercises - Clock Angles
+o	Coding Exercises - Filtering lists
+o	Coding Exercises - Missing number
+o	Coding Exercises - Power of Two
+o	Coding Exercises - Stack's Largest Value
+o	Coding Exercises - Balanced Closures
+o	Intersection of N lists
+o	Traversing nested lists
+o	Word Frequency
+	Given a string, return the word that has the single most repeated character. Ignore punctuation. If there is a tie, return the first word.
+Input: "Some people feel the rain, while others just get wet".
+Output: "people"
+o	Files and Directories: get only files ending in txt; get only files that have the word "copyright" in them; etc
+o	File comparison: text in file 1 appears in file 2
+•	Medium Difficulty
+o	Coding Exercises - Tail
+o	Web Visitors from Log Files
+o	Calculate the size of a directory
+
+
+
+
+Interviewing - Followup to the interview
+Similar Pages
+Incoming Links
+This place is restricted, so you must join to create or reply to content. Ask to Join
+Actions
+Created by Jason S. White on Mar 12, 2018 9:43 AM. Last modified by Jason S. White on Mar 12, 2018 9:43 AM. Everyone at Apple can see this.
+After every job interview
+
+It’s critical to follow up with a thank you note to the person that interviewed you. Thank you notes are not just common courtesy; they are essential elements of the interviewing process.
+Your smart competitors will be sending them and employers may hold it against you if you fail to follow up with a thank you. They may view you as uninterested, lazy, or impolite.
+In fact, sending a thank you letter or thank you email can make the difference between getting the job and getting passed over. It’s your opportunity to remind the interviewer of your interest in the job and the top qualifications that set you apart from other applicants.
+The following tips will help you craft a great thank you note for any job interview.
+
+1.	Don’t Procrastinate
+•	Send a thank you email immediately after the interview. You want to reinforce your good impression (or strengthen your not-so-good impression) in your employer’s mind while the memory of the interview is still fresh. If possible, send your thank you note within 24 hours of the interview.
+•	If you find yourself struggling to write the “perfect” thank you note, remember that it’s more important to send a good thank you note promptly than to send a great thank you note after the interviewer has already eliminated you from the running. Do the best you can in the time you have. The tips below will help you.
+2.	Customize Your Job Interview Thank You Notes
+•	When writing your thank you note, it’s important to keep your reader in mind — her personality, her level within the organization, and her top priorities for the job in question.
+o	This reader focus will serve you well in choosing both format and content for your thank you. While an email thank you note is standard these days (and will reach your recipient much sooner), there may be times when a handwritten note or card may help differentiate you from other candidates. Some candidates opt to send both in these situations. Think about what seems most appropriate for your interviewer.
+•	You also must customize the tone of your letter for each interviewer. You don’t want to send a stiff, formal thank you letter to a 28-year-old techie manager.
+•	You also don’t want to be too casual or familiar if your interviewer was a 60-year-old CEO in a three-piece suit.
+•	Every thank you note should begin with a sincere expression of appreciation.
+o	For example: “Thank you for taking the time to meet with me yesterday.”
+3.	Your Thank You Letter is a Sales Letter
+•	You must look at your thank you note as a marketing/sales opportunity. This may be your last chance to influence the interviewer and convince him to bring you back for a second interview or even extend a job offer.
+o	Here’s how: After expressing your thanks for the interviewer’s time and interest (see above), concisely reiterate why you want the job, why you think you are the best choice for the job, what you can give to the company that other applicants can’t, and any other selling points for this particular position.
+o	If you were paying attention in the job interview, you’ll know which details will be most compelling for your interviewer.
+o	Use the thank you note to add important details that you forgot to mention (or the interviewer forgot to ask about) or to reinforce the aspects of your background that seemed to impress the interviewer. If you are one of a crowd of candidates, don’t assume that the interviewer will remember all of the details. It never hurts to reiterate your strongest points.
+o	Just remember to keep the letter short and to the point. If you try to include too much detail, you will lessen the impact.
+•	Also, don’t forget to communicate enthusiasm and interest in the job. This is especially important if you feel you were stiff in the interview.
+o	Show interest, but not desperation. It’s okay to say that you would love to have the opportunity to work for a great firm like Company X or take on such an interesting role.
+o	It’s not okay to say you really need a job right now and you’ll do whatever it takes to get an offer. Show confidence in your qualifications even if you have to fake it.
+•	Close by providing your contact information and expressing your willingness to provide additional information as needed or meet with other decision makers.
+•	It’s also fine to politely inquire about next steps in the process if the interviewer didn’t provide that information in the meeting.
+o	Special Note: Remember that you should write separate thank you notes to each interviewer — even if you participate in a group or panel interview or meet with three separate people in a row at the same firm.
+o	Each person will play a role in the decision-making process. Address each separately and tailor your thank you notes to address the different individuals and their specific priorities/concerns.
+4.	Pay Attention to the Details
+•	Always, always proofread your thank you letter and make sure everything is spelled correctly, including names. Do NOT rely on your spell check tool. If you don’t know how to spell a person’s name, call the office and double check. Nothing is worse than misspelling somebody’s name in a thank you letter.
+•	Finally, make sure you have the right name in the salutation. Don’t send an email to Bob that leads off with Dear Fred. When you’re sending lots of thank you notes, this mistake is common, but it makes you look sloppy.
+
+
+•	Describe the work environment or culture in which you are most productive and happy.
+•	What are the characteristics exhibited by the best boss you have ever had––or wished that you have had?
+•	In your experience, what how does an organization encourage your use of your discretionary energy and effort––that willingness each employee has––to go the extra mile, push harder, spend more time, and do whatever is necessary to get the job done?
+•	Describe the management style that will bring forth your best work and efforts.
+•	Describe what you believe are the most effective roles that a good manager plays in his or her relationship with reporting staff members.
+•	What are the positive aspects of your current job and work environment, or the last position you held before coming to this interview?
+•	What is the single most important factor that must be present in your work environment for you to be successfully and happily employed? Now that you have answered that question, what were two others that you debated about before giving the response that you chose?
+•	What is your preferred work style? Do you prefer working alone or as part of a team? What percentage of your time would you allocate to each, given the choice?
+•	How would your coworkers describe your work style and contributions in your former job?
+•	What are the three to five expectations that you have of senior leaders in an organization where you will work successfully?
+•	Tell us about an occasion when you believe that you delighted a customer, either an internal or an external customer.
+•	When you work with a team, describe the role that you are most likely to play on the team.
+•	How would coworkers describe the role that you play on a team?
+•	When working with people, in general, describe your preferred relationship with them.
+•	How would reporting staff members describe their relationship with you? What would they like to see you do more of, less of, start, and stop?
+•	Provide an example of a time when you went out of your way and jumped through hoops to delight a customer.
+•	Tell us about a decision that you made that was made based primarily on customer needs and input.
+
+•	Have you ever struggled to communicate with colleagues while working together on a project?
+•	Can you share an example of a situation in which teamwork enhanced your output as an employee?
+•	What is your idea of an ideal team-building exercise? 
+•	What type of support does a team need to function as efficiently as possible?
+•	Do you prefer working on your own or as part of a team?
+•	Give an example of a successful project that you were part of. 
+What was your role? What made the project successful in your view?
+•	Describe a situation from your past work experiences in which you have determined a team was the best potential solution to a problem, a needed process improvement or a planned change.  
+How did the team work out for you? Was it the correct decision in retrospect?
+•	What actions and support, in your experience, make a team function successfully?
+•	Can you share an example of a situation in which teamwork enhanced your ability to accomplish your goals or the outcomes that were expected from you as an employee?
+•	Share a time when you experienced working with a difficult coworker on a team. How was the coworker difficult and what did you do to resolve the situation to encourage the team's ongoing progress?
+•	Do you feel more energized when you are working alone or when you are working as part of a team?
+•	Describe the perfect work environment level of interaction with coworkers in which you would experience the most success.
+•	Have you been a member of a team that struggled or failed to accomplish its goal? If so, what assessment did you make of the reasons for the failure?
+•	Have you had the opportunity to work with a virtual team? 
+If so, what special team dynamics, activities, and actions did working virtually require How did you create team cohesiveness in a virtual setting?
+•	Have you managed a group of employees in the past? If so, how did you build the group's sense of teamwork so that the members could work more cohesively together? 
+
+
+
+
+
+Overview:
+One of the objectives of the SRE Hiring Process is to ensure each new hire is appropriately and consistently evaluated. Site Reliability Engineers need to have the a good mix of customer facing and technical skills, a base level of understanding and fluency in automation through software development. ISO staff works with computers, and it's important to make computers work for them. Finally, SRE's need to understand the architecture and context of distributed systems. Given the importance of these focus areas, new hires are required to meet a minimum bar in these areas: Fit, Technical Skills, Software Development and Architecture.
+Adequately vetting these skills requires appropriate and consistent measurement. When phone screening & interviewing candidates, it's important for the purposes of gathering data to provide a number score in these area. Acknowledging that a number score is subjective, it's important to have appropriate and probing questions questions in order to solicit a response that provides information required.
+When Phone Screening & Interviewing, the way these questions should be approached is not pass/fail but as explorations of a candidates strengths and weaknesses. The right attitude has much higher level of SRE team success than deep knowledge in a particular area. Ensure that questions from each of these areas are asked to adequately asses candidate strengths.
+
+Fit:
+•	Forget this role. Describe for me your “ideal” job.
+•	SRE roles can often gravitate towards fire fighting and crises management’. Project work requires detailed, in-depth analysis with prolonged periods of focus. In an interrupt driven operational role, how do you balance support tasks against focused improvement work?
+•	Give us an example of when you handled a stressful situation.
+•	Tell me about a time that was particularly difficult circumstances, and what did you and the team do to resolve it?
+•	At your last review, what improvements did your manager suggest you make?
+•	Tell us about your short and long term goals?
+•	Tell me about yourself. What do you do, day to day?
+•	Tell me about the hardest you've ever worked.
+•	Tell me about the worst-run/best-run outage you've been a part of. What made it bad/well-run?
+Technical Skills:
+Troubleshooting
+•	Let’s say that after your first month in a new job, you are on-call and a customer contacts you in a panic that the server running linux they use for their critical application is responding very slowly. How would you approach the situation and what steps would you take to resolve it?
+Operating Systems
+•	What is the difference between a symbolic and hard link? When would you use each?
+•	What are shadow passwords?
+•	How do you rig Apache to start up on boot? - Follow Up: Apache doesn't start up on boot, and the previous step checks out okay. How do you track down the problem?
+•	How do you delete a file that starts with a dash?
+•	What happens to an application that runs out of memory?
+•	What is your stance on enabling/disabling swap on server systems and why?
+•	Rank the following in terms of speed: Access a register, Access main memory, Perform a context switch, Execute a seek on a 15K RPM drive.
+•	Describe difference between process and thread.
+•	What is your favorite Linux distro & why?
+•	What information is contained in a file inode?
+•	Which system call returns inode information?
+•	What signal does the "kill" command send by default?
+Networking
+•	What is the difference between layer 2 and layer 3 devices?
+•	How do you distinguish a DNS problem from a network problem?
+•	How can you tell what ports on a system are open?
+•	Describe in detail what happens when you type 'telnet google.com 80' at a bash shell prompt.
+•	How many IP addresses are usable in a /23 network?
+Web
+•	You have a local machine at home with internet access, tell me as much as you can about what happens when you type “www.apple.com” into the address bar of your web browser.
+•	Describe POST and GET & the differences of each.
+•	Describe the HTTP/1.1 use of a 100-continue status (client sends request expecting server 100-continue before proceeding)
+Storage
+•	With 4 disks in a system, is there a difference between RAID 0+1 and RAID 1+0?
+Security
+•	Security has many components and aspects to it. - If you were tasked with installing a web server running on linux, considering all elements of server installation and use, how would you approach the task from a security context?
+Software Development:
+Scripting / Automation
+•	You have a list of files in a directory in your homedir, all named “*.doc” (e.g. foo.doc, bar.doc, baz.doc), and you need to rename them to *.txt (e.g. foo.txt, bar.txt, baz.txt). There are thousands of them, so you need to use some form of scripting to do it. Show me how you’d do it.
+•	Write a monitoring script in your home directory that can detect if a host has been rebooting frequently.  Are there any assumptions the script makes?  Are there edge cases it won’t detect?
+•	Save a sorted list of the top 25 largest files/directories in /Applications to your desktop.  What command did you use?
+•	Create 250 files in /var/tmp with the content of the file being the same as the filename.  Schedule a cleanup job that will delete everything in /var/tmp at 10pm every night.  Show your work.
+•	In your chosen language write a script to list all of the files in a directory as a web page.
+Data Structures / Algorithms
+•	In programming, there are many elements and structures. Please describe the following and potential use cases: Variable, Conditional, Array, Loop, hash map.
+•	Define Big O notation.
+•	You have a list of random integers, how do you find two numbers whose sum is X?  What is the complexity of your solution? Can it be better?
+•	Give a simple explanation of pass-by-value and pass-by-reference. What does your preferred programming language use? Some of them may even use something else differently.
+•	What is recursion?  What is it good for?  Can you give me an example of a problem that would be solved by using recursion?
+•	What happens when you index a column in a database?  Why does this make the lookups faster for that particular column?  What are the downsides to indexing?
+•	Calculate the angle between the hour hand and minute hand on an analog 12-hour circular clock. Details
+•	Given a list of variable size containing strings, write a function to filter out duplicates. Details
+•	You have a fixed-size list of integers from 1 to N (inclusive), but one of them is randomly removed. How do you find that missing integer? Details
+•	Write a function that accepts an integer and returns True if the number is a power of 2, False otherwise. Details
+Configuration Management
+•	Please tell us about your experience using configuration management to manage a file, package or process. What were some problems you encountered, how did you resolve them, and what did you learn from that experience?
+QA / Tools
+•	What different types of testing need to be carried out on a software system, and what tools would you use to achieve this testing? What testing is necessary to ensure a new service is ready for production?
+•	How would you make key aspects of a software system traceable?
+•	How do you handle version control?
+Architecture:
+•	Why is it hard to build a consistent and reliable distributed system?
+•	Define the CAP Theorem.
+•	How would you assess how "deployable" a system is?
+•	How would you deploy software to 5000 systems?
+•	What are some examples of how you might scale a write/read-heavy app? Why?
+•	How would you migrate application xyz from a traditional datacenter to AWS cloud?
+•	Design a system that would scan 100,000 URLs for the Heartbleed vulnerability reasonably quickly. You can use any open source projects, programming languages, tools, etc.
+•	How would you design a distributed lock?
+
+
+
+Version 2 41 Views Categories: Tags:
+Average User Rating: No ratings (0 ratings)
+Average User Rating
+No ratings
+(0 ratings)
+Comments
+•	0 Comments (everyone at Apple can see these)
+Add a comment
+Apple Registered Confidential.
+Home | Top of page | Help
+
+
+
