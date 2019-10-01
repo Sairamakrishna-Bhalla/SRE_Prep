@@ -1,0 +1,59 @@
+					DevOps Interview Questions
+
+How would you recover a lost root password on a Redhat Linux server?
+
+If there was a hardware issue what logs would you check? There is a specific log for hardware issues, what is it?
+
+How would you go about configuring a new disk partition and adding it to LVM(Logical Volume Manager)?
+
+How can you extend(add another disk) to an existing Volume Group?
+
+How would you troubleshoot performance CPU & Memory performance issues, what commands would you use?
+
+How can you tell if a system is swapping?
+
+How can you check how much memory & CPU is currently in use?
+
+What command would you use to update kernel parameters & make the change persistent?
+
+What is the configuration file for updating kernel parameters?
+
+Are you familiar with IP bonding? How would you configure that? 
+
+If you do a curl command against http://www.google.com, what actually happens in the background?
+
+If your adding additional storage to an AWS EC2 instance, what commands do you need to run to be able to use the newly created volume?
+
+Would you use LVM on an AWS EC2 instance? 
+
+Are you familiar with AD related tools, why do you need to connect as root to the OU?
+
+What how can you check what routes are configured on a host?
+
+What is the difference between a default route and a regular static route?
+
+Are you familiar with Git? What have you used it for?
+
+How to make your script a service? How systemd starts a user defined service?
+
+How to modify Kernel parameters ?
+
+How do you troubleshoot slowness of database?
+
+What happens when you type Google.com and hit enter? How does the request know to check in cache for the server?
+
+How to scan new NAS devices ?
+
+S3 Volume Plugin For Docker - https://github.com/chooban/s3-docker-volume-plugin
+
+Object Storage vs. File Storage vs. Block Storage - https://www.netapp.com/us/info/what-is-object-storage.aspx
+
+How can I use a local file on container? - https://www.techrepublic.com/article/how-to-share-data-between-a-docker-container-and-host/
+
+Why Do You Need Object Storage? - https://blog.westerndigital.com/reasons-need-object-storage/
+
+How to ADD/COPY files in DockerFile ? - https://stackoverflow.com/questions/24958140/what-is-the-difference-between-the-copy-and-add-commands-in-a-dockerfile
+
+Eucalyptus Framework OR Why do companies go for Triplet model ? - https://en.wikipedia.org/wiki/Eucalyptus_(software)
+
+
