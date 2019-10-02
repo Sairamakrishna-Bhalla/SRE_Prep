@@ -1,0 +1,24 @@
+given a sub string of a movie title to search in a URL
+
+execute a bunch of commands and break the loop if the exit code is not 0
+
+find the most repeated IP address in a log file
+
+reverse a string without using the reverse function
+
+find the summation of values within a range of given indices
+
+find if a string has repeated characters
+
+evaluate every character in a string and print alpha chars separately and numerics separately
+
+find the combinations of numbers which give the result
+
+print the values of divisions in floar format and repeating numbers should be in ( and )
+
+given a URL of a company directory and print the hierarchy (who reports to who etc)
+
+summation of numbers of rational numbers (fraction)
+
+find the non-repeating characters in a string
+
