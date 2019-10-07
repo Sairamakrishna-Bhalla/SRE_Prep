@@ -1,76 +1,154 @@
-					DevOps Interview Questions
-
-How would you recover a lost root password on a Redhat Linux server?
-
-If there was a hardware issue what logs would you check? There is a specific log for hardware issues, what is it?
-
-How would you go about configuring a new disk partition and adding it to LVM(Logical Volume Manager)?
-
-How can you extend(add another disk) to an existing Volume Group?
-
-How would you troubleshoot performance CPU & Memory performance issues, what commands would you use?
-
-How can you tell if a system is swapping?
-
-How can you check how much memory & CPU is currently in use?
-
-What command would you use to update kernel parameters & make the change persistent?
-
-What is the configuration file for updating kernel parameters?
-
-Are you familiar with IP bonding? How would you configure that? 
-
-If you do a curl command against http://www.google.com, what actually happens in the background?
-
-If your adding additional storage to an AWS EC2 instance, what commands do you need to run to be able to use the newly created volume?
-
-Would you use LVM on an AWS EC2 instance? 
-
-Are you familiar with AD related tools, why do you need to connect as root to the OU?
-
-What how can you check what routes are configured on a host?
-
-What is the difference between a default route and a regular static route?
-
-Are you familiar with Git? What have you used it for?
-
-How to make your script a service? How systemd starts a user defined service?
-
-How to modify Kernel parameters ?
-
-How do you troubleshoot slowness of database?
-
-What happens when you type Google.com and hit enter? How does the request know to check in cache for the server?
-
-How to scan new NAS devices ?
-
-S3 Volume Plugin For Docker - https://github.com/chooban/s3-docker-volume-plugin
-
-Object Storage vs. File Storage vs. Block Storage - https://www.netapp.com/us/info/what-is-object-storage.aspx
-
-How can I use a local file on container? - https://www.techrepublic.com/article/how-to-share-data-between-a-docker-container-and-host/
-
-Why Do You Need Object Storage? - https://blog.westerndigital.com/reasons-need-object-storage/
-
-How to ADD/COPY files in DockerFile ? - https://stackoverflow.com/questions/24958140/what-is-the-difference-between-the-copy-and-add-commands-in-a-dockerfile
-
-Eucalyptus Framework OR Why do companies go for Triplet model ? - https://en.wikipedia.org/wiki/Eucalyptus_(software)
-
-How do you find the routing table in Linux
-
-How do you interpret TCP packets (not WireShark way) in native Linux
-
-Where can you get the file systems and disk space details
-
-Explain the python projects that you worked on (in detail)
-
-what operations that you carry on K8s
-
-Jenkins experience - did you build any pipelines. (What are the prerequisites and how did you carry on)
-
-Diff between switch and router
-
-travel of an IP packet end to end (OSI model)
-
-How do you plan and provisioning a new cluster
-
+1. How would you recover a lost root password on a Redhat Linux server?
+2. If there was a hardware issue what logs would you check? There is a specific log for hardware issues, what is it?
+3. How would you go about configuring a new disk partition and adding it to LVM(Logical Volume Manager)?
+4. How can you extend(add another disk) to an existing Volume Group?
+5. How would you troubleshoot performance CPU & Memory performance issues, what commands would you use?
+6. How can you tell if a system is swapping?
+7. How can you check how much memory & CPU is currently in use?
+8. What command would you use to update kernel parameters & make the change persistent?
+9. What is the configuration file for updating kernel parameters?
+10. Are you familiar with IP bonding? How would you configure that? 
+11. If you do a curl command against http://www.google.com, what actually happens in the background?
+12. If your adding additional storage to an AWS EC2 instance, what commands do you need to run to be able to use the newly created volume?
+13. Would you use LVM on an AWS EC2 instance? 
+14. Are you familiar with AD related tools, why do you need to connect as root to the OU?
+15. What how can you check what routes are configured on a host?
+16. What is the difference between a default route and a regular static route?
+17. Are you familiar with Git? What have you used it for?
+18. How to make your script a service? How systemd starts a user defined service?
+19. How to modify Kernel parameters ?
+20. How do you troubleshoot slowness of database?
+21. What happens when you type Google.com and hit enter? How does the request know to check in cache for the server?
+22. How to scan new NAS devices ?
+23. S3 Volume Plugin For Docker - https://github.com/chooban/s3-docker-volume-plugin
+24. Object Storage vs. File Storage vs. Block Storage - https://www.netapp.com/us/info/what-is-object-storage.aspx
+25. How can I use a local file on container? - https://www.techrepublic.com/article/how-to-share-data-between-a-docker-container-and-host/
+26. Why Do You Need Object Storage? - https://blog.westerndigital.com/reasons-need-object-storage/
+27. How to ADD/COPY files in DockerFile ? - https://stackoverflow.com/questions/24958140/what-is-the-difference-between-the-copy-and-add-commands-in-a-dockerfile
+28. Eucalyptus Framework OR Why do companies go for Triplet model ? - https://en.wikipedia.org/wiki/Eucalyptus_(software)
+29. How do you find the routing table in Linux
+30. How do you interpret TCP packets (not WireShark way) in native Linux
+31. Where can you get the file systems and disk space details
+32. Explain the python projects that you worked on (in detail)
+33. what operations that you carry on K8s
+34. Jenkins experience - did you build any pipelines. (What are the prerequisites and how did you carry on)
+35. Diff between switch and router
+36. travel of an IP packet end to end (OSI model)
+37. How do you plan and provisioning a new cluster
+38. Why should you periodically update kernel 
+39. How we can check system performance?
+40. What is initrd image and what is its function in the linux booting process?
+41. What is Server hardening?
+42. How can convert from one file system to another ?
+43. What is the impact of inode fill in file system
+44. Explain about file system ?
+45. What is network bonding and network aliases
+46. What is the difference between name based virtual hosting and IP based virtual hosting? Explain the scenario where name based virtual hosting seems useful?
+47. What is a) Rescue mode b) Single user mode c) Emergency mode
+48. Password based authentication is disabled in your infrastructure. So how do you login to the servers ?
+49. List the 6 stages of boot process ?
+50. What is Superblock?
+51. What is sticky bit and file attributes ?.
+52. Explain the terms suid, sgid and sticky bit?
+53. What are the benefits of rDNS
+54. Is it safe to maintain the default port numbers on services?
+55. Is there any relation between modprobe.conf file and network devices?
+56. Grub Recovery
+57. What are the difference between hard links and soft links and symlinks 
+58. What is network bonding in Linux and where the important configuration files involved? What is the advantage of Network Bonding?
+59. Explain the different Scenarios involved in TCP 3 way handshake?
+60. What is post mortem meetings ?
+61. What is the difference between Git and SVN?
+62. In Git, how do you revert a commit that has already been pushed and made public
+63. What is the difference between git pull and git fetch?
+64. What is Git stash?
+65. Describe branching strategies you have used?
+66. What are the advantages of using GIT?
+67. Why GIT better than Subversion?
+68. How can you fix a broken commit?
+69. What is the status code 403,404 represented in apache server?
+70. Shell
+71. How to get script name inside a script
+72. How to debug bash script
+73. How to check if file exist on filesystem ?
+74. What it means by #!/bin/sh or #!/bin/bash
+75. How to run script in background ?
+76. What difference between & and &&
+77. How to get part of string variable with echo command only ?
+78. How shell script get input values ?
+79. Explain about Python's parameter passing mechanism?
+80. What is a Python module?
+81. Name the File-related modules in Python?
+82. use of with statement?
+83. file processing modes supported by Python ?
+84. how to redirect the output of a python script from standout(ie., monitor) on to a file ?
+85. use of enumerate() in Python?
+86. How would convert JSON data into Python data?
+87. Exception Handling
+88. Explain Inheritance in Python with an example.
+89. multithreading? Give an example.
+90. Instance variables are different from class variables?
+91. args, **kwargs
+92. How memory is managed in Python?
+93. What is negative index in Python?
+94. What is module and package in Python?
+95. Explain how can you generate random numbers in Python?
+96. What does the “self” keyword do?
+97. Why we need DevOps ?
+98. Have you worked on  containers ? 
+99. What is the function of CI (Continuous Integration) server ? 
+100. What is Continuous Delivery ?
+101. What is the role of a configuration management tool in devops ?
+102. What are easiest ways to build a small cloud ?
+103. What is AWS (Amazon Web Services)? Did got chance to work on Amazon tools ?
+104. What is EC2 ?
+105. Explain Elastic Block Storage? 
+106. What is S3?  What is it used for? Should encryption be used?
+107. What is auto-scaling? How does it work?
+108. What is configuration management in AWS?
+109. Can S3 be used with EC2 instances
+110. difference between Scalability and Elasticity?
+111. What are the features of the Amazon EC2 service?
+112. any advantage of using NoSQL database over RDBMS ?
+113. What are the benefits of NoSQL databases Documents ?
+114. Difference between containers and virtual machines ?
+115. What is CoreOS, and what are alternatives ?
+116. How Puppet Works?
+117. What is Kickstart ?
+118. What is Puppet Module and How it is different from Puppet Manifest?
+119. What is Facter in Puppet?
+120. What SAN design you will choose? Why?
+121. What Factors you will consider for designing a SAN?
+122. What is LUN masking?
+123. What is Port Zoning?
+124. What is SeLinux?
+125. Which daemon tracks the events on the linux server.
+126. How to review the boot messages
+127. What do we get from /proc/cpuinfo
+128. Why should I use DAS either NAS or SAN
+129. What is drop cache in Linux and how do you clear it ?
+130. What is swappiness in Linux Memory Management
+131. What are tools for network monitoring? List few
+132. What you know about serverless model ?
+133. Where the kernel modules are located ?
+134. What are File system types and limitations
+135. What is iotop
+136. What is iostat
+137. What is an inode number
+138. What are diff b/w FTP vs NFS vs ISSCSI
+139. What is dmidecode
+140. What is hdparm
+141. What are modes of Network bonding
+142. How are rpc and nfs are related
+143. What is the in routing table144
+145. 
+146. 
+147. 
+148. 
+149. 
+150. 
+151. 
+152. 
+153. 
+154. 
+155. 
