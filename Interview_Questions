@@ -140,15 +140,20 @@
 140. What is hdparm
 141. What are modes of Network bonding
 142. How are rpc and nfs are related
-143. What is the in routing table144
-145. 
-146. 
-147. 
-148. 
-149. 
-150. 
-151. 
-152. 
-153. 
-154. 
-155. 
+143. What is the in routing table
+144. What is "d" flag for a process in top command putput?
+145. How to sacn ports remotly with using "nmap" "ncat"?
+146. How many Runlevel in linux? what are they?
+147. How to change a Process state in linux and Window?
+148. How you use Puppet and Ansible in your Env and what did you do?
+149. Have you build a depoyment Pipeline in a Prod Env?
+150. How does your EKS setup work? Jenkins, Terraform, Spinnaker etc
+151. What is ctrl+x and ctrl+c?
+152. When do you use Ansible over Puppet and vice-versa ?
+153. Explain the projects that you have worked on Python in your current engagement?
+154. Explain what kind of dashboards and reports that you have generated/built in Splunk?
+155. Explain the monitoring system in your project?
+156. Explain me an investigation that you did recently
+157. Explain me a customer issue and how did you resolve it?
+158. If Inodes are full, how do you fix it?
+159. 
